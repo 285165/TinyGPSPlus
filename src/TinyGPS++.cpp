@@ -231,7 +231,7 @@ bool TinyGPSPlus::endOfTermHandler()
     else if (term[0] == 'G' && strchr("PNABL", term[1]) != NULL && !strcmp(term + 2, _GGAterm))
       curSentenceType = GPS_SENTENCE_GGA;
     else if (term[0] == 'G' && strchr("PNABL", term[1]) != NULL && !strcmp(term + 2, _GSAterm))
-      curSentenceType = GPS_SENTENCE_GGA;      
+      curSentenceType = GPS_SENTENCE_GSA;      
     else
       curSentenceType = GPS_SENTENCE_OTHER;
 
