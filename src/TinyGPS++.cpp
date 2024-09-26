@@ -291,13 +291,13 @@ bool TinyGPSPlus::endOfTermHandler()
     case COMBINE(GPS_SENTENCE_GGA, 9): // Altitude (GGA)
       altitude.set(term);
       break;
-    case COMBINE(GPS_SENTENCE_GGA, 4): // PDOP
+    case COMBINE(GPS_SENTENCE_GSA, 4): // PDOP
       pdop.set(term);
       break;
-    case COMBINE(GPS_SENTENCE_GGA, 5): // HDOP
+    case COMBINE(GPS_SENTENCE_GSA, 5): // HDOP
       hdop.set(term);
       break;
-    case COMBINE(GPS_SENTENCE_GGA, 6): // VDOP
+    case COMBINE(GPS_SENTENCE_GSA, 6): // VDOP
       vdop.set(term);
       break;    
     case COMBINE(GPS_SENTENCE_RMC, 12):
