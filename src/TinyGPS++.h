@@ -196,6 +196,16 @@ struct TinyGPSHDOP : TinyGPSDecimal
    double hdop() { return value() / 100.0; }
 };
 
+struct TinyGPSPDOP : TinyGPSDecimal
+{
+   double pdop() { return value() / 100.0; }
+};
+
+struct TinyGPSVDOP : TinyGPSDecimal
+{
+   double vdop() { return value() / 100.0; }
+};
+
 class TinyGPSPlus;
 class TinyGPSCustom
 {
@@ -238,6 +248,8 @@ public:
   TinyGPSAltitude altitude;
   TinyGPSInteger satellites;
   TinyGPSHDOP hdop;
+  TinyGPSPDOP pdop;
+  TinyGPSVDOP vdop;
 
   static const char *libraryVersion() { return _GPS_VERSION; }
 
@@ -254,7 +266,7 @@ public:
   uint32_t passedChecksum()   const { return passedChecksumCount; }
 
 private:
-  enum {GPS_SENTENCE_GGA, GPS_SENTENCE_RMC, GPS_SENTENCE_OTHER};
+  enum {GPS_SENTENCE_GGA, GPS_SENTENCE_GSA, GPS_SENTENCE_RMC, GPS_SENTENCE_OTHER};
 
   // parsing state variables
   uint8_t parity;

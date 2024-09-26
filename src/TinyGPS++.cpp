@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define _RMCterm "RMC"
 #define _GGAterm "GGA"
+#define _GSAterm "GSA"
 
 #if !defined(ARDUINO) && !defined(__AVR__)
 // Alternate implementation of millis() that relies on std
@@ -201,6 +202,11 @@ bool TinyGPSPlus::endOfTermHandler()
         satellites.commit();
         hdop.commit();
         break;
+      case GPS_SENTENCE_GSA:
+        hdop.commit();
+        pdop.commit();
+        vdop.commit();
+        break;
       }
 
       // Commit all custom listeners of this sentence type
@@ -224,6 +230,8 @@ bool TinyGPSPlus::endOfTermHandler()
       curSentenceType = GPS_SENTENCE_RMC;
     else if (term[0] == 'G' && strchr("PNABL", term[1]) != NULL && !strcmp(term + 2, _GGAterm))
       curSentenceType = GPS_SENTENCE_GGA;
+    else if (term[0] == 'G' && strchr("PNABL", term[1]) != NULL && !strcmp(term + 2, _GSAterm))
+      curSentenceType = GPS_SENTENCE_GGA;      
     else
       curSentenceType = GPS_SENTENCE_OTHER;
 
@@ -283,6 +291,15 @@ bool TinyGPSPlus::endOfTermHandler()
     case COMBINE(GPS_SENTENCE_GGA, 9): // Altitude (GGA)
       altitude.set(term);
       break;
+    case COMBINE(GPS_SENTENCE_GGA, 4): // PDOP
+      pdop.set(term);
+      break;
+    case COMBINE(GPS_SENTENCE_GGA, 5): // HDOP
+      hdop.set(term);
+      break;
+    case COMBINE(GPS_SENTENCE_GGA, 6): // VDOP
+      vdop.set(term);
+      break;    
     case COMBINE(GPS_SENTENCE_RMC, 12):
       location.newFixMode = (TinyGPSLocation::Mode)term[0];
       break;
